@@ -1,19 +1,44 @@
 import React from "react";
 import { TextInput } from "react-native-paper";
 import { spacing } from "../../constants/Spacing";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
+import { Controller } from "react-hook-form";
 
-const TextInputM = ({ paperTextProp, placeholder, label, right, left }) => {
+const TextInputM = ({
+  paperTextProp,
+  placeholder,
+  label,
+  right,
+  left,
+  control,
+  errors,
+  name,
+}) => {
   return (
-    <TextInput
-      mode="outlined"
-      label={label && label ? label : "Outlined input"}
-      placeholder={placeholder && placeholder ? placeholder : "Type something"}
-      style={[{ ...paperTextProp }, styles.txt]}
-      right={right && <TextInput.Icon icon={right} />}
-      left={left && <TextInput.Icon icon={left} />}
-      outlineStyle={styles.borderColor}
-    />
+    <View>
+      <Controller
+        name={name && name}
+        control={control && control}
+        render={({ field: { value, onChange, onBlur } }) => {
+          return (
+            <TextInput
+              mode="outlined"
+              label={label && label ? label : ""}
+              value={value}
+              onChangeText={onChange}
+              onBlur={onBlur}
+              placeholder={placeholder && placeholder ? placeholder : ""}
+              style={styles.txt}
+              right={right && <TextInput.Icon icon={right} />}
+              left={left && <TextInput.Icon icon={left} />}
+              outlineStyle={styles.borderColor}
+              {...paperTextProp}
+            />
+          );
+        }}
+      />
+      {/* {errors && } */}
+    </View>
   );
 };
 

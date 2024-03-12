@@ -1,22 +1,24 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import LoginScreen from "./screens/LoginScreen";
-import SignUpScreen from "./screens/SignUpScreen";
-
-const Stack = createNativeStackNavigator();
+import { Provider, useSelector, useDispatch } from "react-redux";
+import { store } from "./store";
+import Root from "./Root";
+import { getTokenFromLocalStorage } from "./utils/localStorage";
+import { useEffect } from "react";
+import { authenticate } from "./features/auth/authSlice";
 
 export default function App() {
+ 
+
   return (
     <>
       <StatusBar style="auto" />
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen name="login" component={LoginScreen} />
-          <Stack.Screen name="signup" component={SignUpScreen} />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <Provider store={store}>
+        <NavigationContainer>
+          <Root />
+        </NavigationContainer>
+      </Provider>
     </>
   );
 }
